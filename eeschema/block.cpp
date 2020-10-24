@@ -87,7 +87,7 @@ int SCH_EDIT_FRAME::BlockCommand( EDA_KEY key )
         cmd = BLOCK_DELETE;
         break;
 
-    case MOUSE_MIDDLE:
+    case MOUSE_RIGHT:
         cmd = BLOCK_ZOOM;
         break;
     }

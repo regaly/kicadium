@@ -1106,7 +1106,8 @@ void EDA_DRAW_PANEL::OnMouseEvent( wxMouseEvent& event )
 
     if( event.RightDown() )
     {
-        OnRightClick( event );
+        if ( m_PanStartCenter == GetParent()->GetScrollCenterPosition() && m_PanStartEventPosition == event.GetPosition() )
+           OnRightClick( event );
         return;
     }
 
@@ -1119,8 +1120,8 @@ void EDA_DRAW_PANEL::OnMouseEvent( wxMouseEvent& event )
     if( event.ButtonDClick( 1 ) )
         localbutt = GR_M_LEFT_DOWN | GR_M_DCLICK;
 
-    if( event.MiddleDown() )
-        localbutt = GR_M_MIDDLE_DOWN;
+    if( event.RightDown() )
+        localbutt = GR_M_RIGHT_DOWN;
 
     INSTALL_UNBUFFERED_DC( DC, this );
     DC.SetBackground( *wxBLACK_BRUSH );
@@ -1191,7 +1192,7 @@ void EDA_DRAW_PANEL::OnMouseEvent( wxMouseEvent& event )
         m_ignoreNextLeftButtonRelease = false;
     }
 
-    if( event.ButtonDown( wxMOUSE_BTN_MIDDLE ) )
+    if( event.ButtonDown( wxMOUSE_BTN_RIGHT ) )
     {
         m_PanStartCenter = GetParent()->GetScrollCenterPosition();
         m_PanStartEventPosition = event.GetPosition();
@@ -1201,14 +1202,13 @@ void EDA_DRAW_PANEL::OnMouseEvent( wxMouseEvent& event )
         SetCursor( wxCURSOR_SIZING );
     }
 
-    if( event.ButtonUp( wxMOUSE_BTN_MIDDLE ) )
+    if( event.ButtonUp( wxMOUSE_BTN_RIGHT ) )
     {
         INSTALL_UNBUFFERED_DC( dc, this );
         CrossHairOn( &dc );
         SetCursor( (wxStockCursor) m_currentCursor );
     }
-
-    if( event.MiddleIsDown() )
+    if( event.RightIsDown() )
     {
         wxPoint currentPosition = event.GetPosition();
 
@@ -1242,7 +1242,7 @@ void EDA_DRAW_PANEL::OnMouseEvent( wxMouseEvent& event )
      * or when changing panels in hierarchy navigation
      * or when clicking while and moving mouse
      */
-    if( !event.LeftIsDown() && !event.MiddleIsDown() )
+    if( !event.LeftIsDown() && !event.RightIsDown() )
     {
         m_minDragEventCount = 0;
         m_canStartBlock   = 0;

@@ -126,7 +126,7 @@ int PCB_EDIT_FRAME::BlockCommand( EDA_KEY aKey )
         cmd = BLOCK_FLIP;
         break;
 
-    case MOUSE_MIDDLE:
+    case MOUSE_RIGHT:
         cmd = BLOCK_ZOOM;
         break;
     }

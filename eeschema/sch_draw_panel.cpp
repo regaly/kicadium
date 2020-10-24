@@ -330,7 +330,9 @@ void SCH_DRAW_PANEL::OnMouseEvent( wxMouseEvent& event )
 
     if( event.RightUp() )
     {
-        OnRightClick( event );
+        SetCursor( m_PanPrevCursor );
+        if (m_PanStartCenter == GetParent()->GetScrollCenterPosition() && m_PanStartEventPosition == event.GetPosition() )
+           OnRightClick( event );
         return;
     }
 
@@ -343,8 +345,8 @@ void SCH_DRAW_PANEL::OnMouseEvent( wxMouseEvent& event )
     if( event.ButtonDClick( 1 ) )
         localbutt = GR_M_LEFT_DOWN | GR_M_DCLICK;
 
-    if( event.MiddleDown() )
-        localbutt = GR_M_MIDDLE_DOWN;
+    if( event.RightDown() )
+        localbutt = GR_M_RIGHT_DOWN;
 
     // Compute the cursor position in drawing (logical) units.
     //GetParent()->SetMousePosition( event.GetLogicalPosition( DC ) );
@@ -393,22 +395,23 @@ void SCH_DRAW_PANEL::OnMouseEvent( wxMouseEvent& event )
         m_ignoreNextLeftButtonRelease = false;
     }
 
-    if( event.ButtonDown( wxMOUSE_BTN_MIDDLE ) )
+    if( event.ButtonDown( wxMOUSE_BTN_RIGHT ) )
     {
         m_PanStartCenter = GetParent()->GetScrollCenterPosition();
         m_PanStartEventPosition = event.GetPosition();
+        m_PanPrevCursor = GetCursor();
 
           CrossHairOff( );
           SetCursor( wxCURSOR_SIZING );
     }
 
-    if( event.ButtonUp( wxMOUSE_BTN_MIDDLE ) )
+    if( event.ButtonUp( wxMOUSE_BTN_RIGHT ) )
     {
          CrossHairOn();
          SetCursor( (wxStockCursor) m_currentCursor );
     }
 
-    if( event.MiddleIsDown() )
+    if( event.RightIsDown() )
     {
         // already managed by EDA_DRAW_PANEL_GAL mouse event handler.
         return;
@@ -435,7 +438,7 @@ void SCH_DRAW_PANEL::OnMouseEvent( wxMouseEvent& event )
      * or when changing panels in hierarchy navigation
      * or when clicking while and moving mouse
      */
-    if( !event.LeftIsDown() && !event.MiddleIsDown() )
+    if( !event.LeftIsDown() && !event.RightIsDown() )
     {
         m_minDragEventCount = 0;
         m_canStartBlock   = 0;

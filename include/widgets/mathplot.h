@@ -1425,6 +1425,7 @@ protected:
     // void OnScroll2       (wxScrollWinEvent &event); //!< Scroll handler, will move canvas
     void    OnShowPopupMenu( wxMouseEvent& event );     // !< Mouse handler, will show context menu
     void    OnMouseMiddleDown( wxMouseEvent& event );   // !< Mouse handler, for detecting when the user
+    void    OnMouseRightDown( wxMouseEvent& event );   // !< Mouse handler, for detecting when the user
 
     // !< drags with the middle button or just "clicks" for the menu
     void    OnCenter( wxCommandEvent& event );              // !< Context menu handler

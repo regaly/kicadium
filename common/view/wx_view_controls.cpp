@@ -246,7 +246,7 @@ void WX_VIEW_CONTROLS::onButton( wxMouseEvent& aEvent )
     {
     case IDLE:
     case AUTO_PANNING:
-        if( aEvent.MiddleDown() ||
+        if( aEvent.RightDown() ||
             ( aEvent.LeftDown() && m_settings.m_panWithLeftButton ) ||
             ( aEvent.RightDown() && m_settings.m_panWithRightButton ) )
         {

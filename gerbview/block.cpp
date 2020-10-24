@@ -61,7 +61,7 @@ int GERBVIEW_FRAME::BlockCommand( EDA_KEY key )
     case GR_KB_ALT:
         break;
 
-    case MOUSE_MIDDLE:
+    case MOUSE_RIGHT:
         cmd = BLOCK_ZOOM;
         break;
     }

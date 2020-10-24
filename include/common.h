@@ -78,6 +78,7 @@ typedef uint32_t EDA_KEY;
 #define GR_KB_SHIFT         ( GR_KB_LEFTSHIFT | GR_KB_RIGHTSHIFT )
 #define GR_KB_SHIFTCTRL     ( GR_KB_SHIFT | GR_KB_CTRL )
 #define MOUSE_MIDDLE        ( EDA_KEY_C( 0x10000000 ) )
+#define MOUSE_RIGHT         ( EDA_KEY_C( 0x20000000 ) )
 #define GR_KEY_INVALID      ( EDA_KEY_C( 0x80000000 ) )
 #define GR_KEY_NONE         ( EDA_KEY_C( 0 ) )
 

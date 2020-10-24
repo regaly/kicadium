@@ -1729,7 +1729,7 @@ EVT_SCROLLWIN_LINEDOWN( mpWindow::OnScrollLineDown )
 EVT_SCROLLWIN_TOP( mpWindow::OnScrollTop )
 EVT_SCROLLWIN_BOTTOM( mpWindow::OnScrollBottom )
 
-EVT_MIDDLE_DOWN( mpWindow::OnMouseMiddleDown )  // JLB
+EVT_RIGHT_DOWN( mpWindow::OnMouseRightDown )  // JLB
 EVT_RIGHT_UP( mpWindow::OnShowPopupMenu )
 EVT_MOUSEWHEEL( mpWindow::OnMouseWheel )        // JLB
 EVT_MOTION( mpWindow::OnMouseMove )             // JLB
@@ -1807,7 +1807,7 @@ mpWindow::~mpWindow()
 
 // Mouse handler, for detecting when the user drag with the right button or just "clicks" for the menu
 // JLB
-void mpWindow::OnMouseMiddleDown( wxMouseEvent& event )
+void mpWindow::OnMouseRightDown( wxMouseEvent& event )
 {
     m_mouseMClick.x = event.GetX();
     m_mouseMClick.y = event.GetY();
@@ -1866,7 +1866,7 @@ void mpWindow::OnMouseMove( wxMouseEvent& event )
         return;
     }
 
-    if( event.m_middleDown )
+    if( event.m_rightDown )
     {
         // The change:
         int Ax  = m_mouseMClick.x - event.GetX();

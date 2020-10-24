@@ -105,6 +105,8 @@ protected:
     wxWindow* m_parent;
 
     DECLARE_EVENT_TABLE()
+
+    wxCursor m_PanPrevCursor;               ///< Previous cursor before pan started
 };
 
 #endif
