@@ -6,3 +6,4 @@ New TODO is TODO.md, original TODO.txt left untouched.
 
 Changes:
  - Pan with right mouse button instead of middle button
+ - eeschema: don't start drawing(bus, wire, hier sheet, graphic polyline) or placing item(junction,wire entry, bus entry, no conn flag) on hotkey just selects the tool

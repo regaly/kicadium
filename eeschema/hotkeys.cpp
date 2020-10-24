@@ -126,8 +126,8 @@ static EDA_HOTKEY HkMouseLeftClick( _HKI( "Mouse Left Click" ), HK_LEFT_CLICK, W
 static EDA_HOTKEY HkMouseLeftDClick( _HKI( "Mouse Left Double Click" ), HK_LEFT_DCLICK, WXK_END, 0 );
 
 // Schematic editor
-static EDA_HOTKEY HkBeginWire( _HKI( "Begin Wire" ), HK_BEGIN_WIRE, 'W', ID_WIRE_BUTT );
-static EDA_HOTKEY HkBeginBus( _HKI( "Begin Bus" ), HK_BEGIN_BUS, 'B', ID_BUS_BUTT );
+static EDA_HOTKEY HkBeginWire( _HKI( "Add Wire" ), HK_BEGIN_WIRE, 'W', ID_WIRE_BUTT );
+static EDA_HOTKEY HkBeginBus( _HKI( "Add Bus" ), HK_BEGIN_BUS, 'B', ID_BUS_BUTT );
 static EDA_HOTKEY HkEndLineWireBus( _HKI( "End Line Wire Bus" ), HK_END_CURR_LINEWIREBUS, 'K',
                                   ID_POPUP_END_LINE );
 
@@ -564,15 +564,7 @@ bool SCH_EDIT_FRAME::OnHotKey( wxDC* aDC, int aHotKey, const wxPoint& aPosition,
     case HK_ADD_LABEL:
     case HK_ADD_HLABEL:
     case HK_ADD_GLABEL:
-    case HK_ADD_JUNCTION:
-    case HK_ADD_WIRE_ENTRY:
-    case HK_ADD_BUS_ENTRY:
-    case HK_ADD_HIER_SHEET:
     case HK_ADD_GRAPHIC_TEXT:
-    case HK_ADD_GRAPHIC_POLYLINE:
-    case HK_ADD_NOCONN_FLAG:        // Add a no connected flag
-    case HK_BEGIN_BUS:
-    case HK_BEGIN_WIRE:
         if( notBusy )
         {
             EDA_HOTKEY_CLIENT_DATA data( aPosition );
@@ -580,6 +572,43 @@ bool SCH_EDIT_FRAME::OnHotKey( wxDC* aDC, int aHotKey, const wxPoint& aPosition,
             cmd.SetClientObject( &data );
             cmd.SetId( hotKey->m_IdMenuEvent );
             GetEventHandler()->ProcessEvent( cmd );
+        }
+        else if( aItem && aItem->IsNew() )
+        {
+            // If the item is a bus or a wire, a begin command is not possible.
+            if( (GetToolId() == ID_BUS_BUTT) && (aItem->Type() == SCH_LINE_T) )
+            {
+                SCH_LINE* segment = (SCH_LINE*) aItem;
+
+                if( segment->GetLayer() != LAYER_BUS )
+                    break;
+
+                // Bus in progress:
+                OnLeftClick( aDC, aPosition );
+            }
+            else if( (GetToolId() == ID_WIRE_BUTT ) && (aItem->Type() == SCH_LINE_T) )
+            {
+                SCH_LINE* segment = (SCH_LINE*) aItem;
+
+                if( segment->GetLayer() != LAYER_WIRE )
+                    break;
+
+                // Wire in progress:
+                OnLeftClick( aDC, aPosition );
+            }
+        }
+        break;
+    case HK_ADD_JUNCTION:
+    case HK_ADD_WIRE_ENTRY:
+    case HK_ADD_BUS_ENTRY:
+    case HK_ADD_HIER_SHEET:
+    case HK_ADD_GRAPHIC_POLYLINE:
+    case HK_ADD_NOCONN_FLAG:        // Add a no connected flag
+    case HK_BEGIN_BUS:
+    case HK_BEGIN_WIRE:
+        if( notBusy )
+        {
+            SetToolID( hotKey->m_IdMenuEvent, wxCURSOR_PENCIL, hotKey->m_InfoMsg );
         }
         else if( aItem && aItem->IsNew() )
         {

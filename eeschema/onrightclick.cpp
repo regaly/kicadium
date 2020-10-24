@@ -692,7 +692,7 @@ void AddMenusForWire( wxMenu* PopMenu, SCH_LINE* Wire, SCH_EDIT_FRAME* frame )
 
     if( Wire == NULL )
     {
-        msg = AddHotkeyName( _( "Begin Wire" ), g_Schematic_Hotkeys_Descr, HK_BEGIN_WIRE );
+        msg = AddHotkeyName( _( "Add Wire" ), g_Schematic_Hotkeys_Descr, HK_BEGIN_WIRE );
         AddMenuItem( PopMenu, ID_POPUP_SCH_BEGIN_WIRE, msg, KiBitmap( add_line_xpm ) );
         return;
     }
@@ -736,7 +736,7 @@ void AddMenusForBus( wxMenu* PopMenu, SCH_LINE* Bus, SCH_EDIT_FRAME* frame )
 
     if( Bus == NULL )
     {
-        msg = AddHotkeyName( _( "Begin Bus" ), g_Schematic_Hotkeys_Descr, HK_BEGIN_BUS );
+        msg = AddHotkeyName( _( "Add Bus" ), g_Schematic_Hotkeys_Descr, HK_BEGIN_BUS );
         AddMenuItem( PopMenu, ID_POPUP_SCH_BEGIN_BUS, msg, KiBitmap( add_bus_xpm ) );
         return;
     }
